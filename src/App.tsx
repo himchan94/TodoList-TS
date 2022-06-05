@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import FocusScreen from './screens/FocusScreen';
 import ListScreen from './screens/ListScreen';
+import { Task } from './types';
 
 const activeStyle = {
   fontWeight: 'bold',
 };
 
 function App() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const tasksProps = { tasks, setTasks };
+
   return (
     <BrowserRouter>
       <nav>
@@ -30,8 +34,8 @@ function App() {
         </NavLink>
       </nav>
       <Routes>
-        <Route path="/" element={<ListScreen />} />
-        <Route path="/focus" element={<FocusScreen />} />
+        <Route path="/" element={<ListScreen {...tasksProps} />} />
+        <Route path="/focus" element={<FocusScreen {...tasksProps} />} />
       </Routes>
     </BrowserRouter>
   );
